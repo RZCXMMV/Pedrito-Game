@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "FunctionalityLibs/MainMenu.c"
+#include "FunctionalityLibs/MainMenu.h"
 
 
 /*
