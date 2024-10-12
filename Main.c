@@ -1,6 +1,8 @@
 #include <stdio.h>
 
 #include "FunctionalityLibs/MainMenu.h"
+#include "FunctionalityLibs/Functions.h"
+#include "UI/Utils.h"
 
 
 /*
