@@ -77,16 +77,16 @@ void MoveTroughMainMenu(void){
                 switch (Option)
                 {
                     case 1:
-                        printf("Jugando...");
+                        PlayGame();
                         getch();
                         break;
                     case 2:
-                        printf("Historial...");
+                        ViewHistoryDataInFile();
                         getch();
                         break;
 
                     case 3:
-                        printf("Como jugar?...");
+                        GetGameInstructions();
                         getch();
                         break;
 
