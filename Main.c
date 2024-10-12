@@ -6,6 +6,9 @@
 
 
 /*
+    Creo que en el archivo de como jugar no es necesario hacerle nada de cuadro, solo son instrucciones,
+    pero eso ya es a decision de ustedes, mi recomendacion seria que, no reparen lo que no esta mal
+    
     TODO:
     (MainMenu.c)
         1.En el menu principal, acueredense de quitar los saltos de linea, ya que seran reemplazados
