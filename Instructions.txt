@@ -1,0 +1,17 @@
+Instrucciones para jugar Pedro Responde
+
+=========================================
+
+Como hacer la peticion?
+
+La formula para ingresar la peticion es escribiendo: 
+Pedro por favor responde esta pregunta o simplemente:
+Pedro por favor responde
+
+Presiona la tecla <Enter> para pasar a la pregunta.
+
+Como preguntar?
+
+Por favor manten un lenguaje positivo y amistoso. 
+Cuando tu pregunta este lista presiona el boton <Enter>.
+Aguarda un instante y veras la respuesta.
