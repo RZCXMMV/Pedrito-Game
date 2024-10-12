@@ -4,6 +4,8 @@
 #include <windows.h>
 
 #include "Prototypes.h"
+#include "Helpers.h"
+#include "../UI/UIPrototypes.h"
 
 #define KEY_UP 72
 #define KEY_DOWN 80
@@ -45,7 +47,7 @@ void MoveTroughMainMenu(void){
 
     while (true)
     {
-        system("cls");
+        ClearScreen();
         DisplayMainMenu(Option);
 
         int Key = _getch();
@@ -89,13 +91,13 @@ void MoveTroughMainMenu(void){
                         break;
 
                     case 4:
-                        printf("Credenciales...");
-                        getch();
+                        ShowCredentials();
+                        ClearScreen();
                         break;
 
                     case 5:
-                        printf("Saliendo...");
-                        getch();
+                        ClearScreen();
+                        LoadLoadingBar("Saliendo del programa...");
                         return;
                 }
                 break;
