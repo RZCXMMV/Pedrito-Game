@@ -219,6 +219,8 @@ void LoadLogoUni(void){
 void ShowCredentials(void){
     ClearScreen();
 
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
     TerminalSize size = CalculateTerminalSize();
 
     DrawRectangleNoSymbolInside(10, 2);
@@ -259,7 +261,12 @@ void ShowCredentials(void){
     
     YAxis += 2;
     gotoxy(XAxis, YAxis);
-    printf("Docente: Ing.Nelson Barrios.\n");
+    printf("Docente: Ing.Nelson Barrios.");
+
+    YAxis += 2;
+    gotoxy(XIdPosition, YAxis);
+    printf("%d/%02d/%02d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+   
 
     getch();
 }
