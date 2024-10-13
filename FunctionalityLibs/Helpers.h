@@ -125,5 +125,47 @@ char *GetPetition(char **AnswerToQuestion) {
     return StringPetition;
 }
 
+char *GetQuestion(){
 
+    char Ch;
+    int Size = 10;
+    int Index = 0;
+    char *Question = (char *) malloc(Size * sizeof(char));
+
+    if(Question == NULL){
+        printf("Error al reservar memoria.\n");
+        getch();
+        exit(EXIT_FAILURE);
+    }
+
+    printf("\nPregunta (cierre '?'): ");
+
+    while((Ch = getch()) != '?'){
+
+        if (Ch == '\b') { // Handle backspace
+            if (Index > 0) {
+                printf("\b \b");
+                Index--;
+            }
+            continue;
+        }
+
+        if(Index >= Size){
+            Size *= 2;
+            Question = (char *) realloc(Question, Size * sizeof(char));
+            if (Question == NULL) {
+                printf("Error al reservar mas memora.\n");
+                return NULL;
+            }
+        }
+        Question[Index++] = Ch;
+        putchar(Ch); // Display character
+    }
+
+    putchar(Ch);
+    Question[Index] = '?';
+    Index++;
+    Question[Index] = '\0';
+    return Question;
+}
 #endif
