@@ -139,13 +139,20 @@ void PlayGame(){
     ClearScreen();
 
     char *Petition;
+    char *AnswerToQuestion = NULL;
     char Key;
-    printf("Presione esc para regresar al menu.\n");
-    printf("Peticion: ");
+    
 
-    Petition = GetStringDynamically();
+    Petition = GetPetition(&AnswerToQuestion);
 
-    printf("%s\n", Petition);
+    printf("\nPeticion final: %s\n", Petition);
+
+    if (AnswerToQuestion != NULL) {
+        printf("Respuesta oculta: %s\n", AnswerToQuestion);
+        free(AnswerToQuestion);
+    }
+
+    free(Petition);
     getch();
 }
 
