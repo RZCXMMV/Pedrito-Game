@@ -20,6 +20,10 @@
         3.En la funcion "DisplayMainMenu" puede ser que haya bug al implentar la decoracion de colores
         si es asi, avisarme o fijarse en el codigo del proyecto anterior
 
+    GetPetition
+        1.Poner los clear screen en las  validaciones de errores. Ya saben que se pone al medio de la terminal
+        depues de esto poner el getch para que se aprecie el cambio.
+
     RECOMENDACIONES:
         1.Pintar el cuadro en rojo para simular que pedrito se esta poniendo enojado, con cada resp
         aleatoria que dé.
