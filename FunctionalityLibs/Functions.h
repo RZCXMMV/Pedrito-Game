@@ -139,19 +139,45 @@ void PlayGame(){
     ClearScreen();
 
     char *Petition;
+    char *Question;
     char *AnswerToQuestion = NULL;
     char Key;
-    
+
+    char *DefaultAnswers[] = {
+        "Es en serio?",
+        "Busca en google",
+        "Disfruta tu soledad",
+        "No quieres saber",
+        "Eres demasiado inocente.",
+        "Que?",
+        "No entendi tu pregunta",
+        "Te falta calle",
+        "No, rey.",
+        "Superala.",
+        "Estas bien?",
+        "Te vas a ir al pozo conmigo."};
 
     Petition = GetPetition(&AnswerToQuestion);
 
-    printf("\nPeticion final: %s\n", Petition);
+    Question = GetQuestion();
 
     if (AnswerToQuestion != NULL) {
         printf("Respuesta oculta: %s\n", AnswerToQuestion);
+        StoreHistoryDataInFile(Question, AnswerToQuestion);
         free(AnswerToQuestion);
     }
 
+    else{
+        int Max = 12;
+        int Min = 0; 
+        int RdNum = rand() % (Max - Min + 1) + Min;
+
+        printf("\nRespuesta: %s\n", DefaultAnswers[RdNum]);
+
+        StoreHistoryDataInFile(Question, DefaultAnswers[RdNum]);
+    }
+
+    free(Question);
     free(Petition);
     getch();
 }
