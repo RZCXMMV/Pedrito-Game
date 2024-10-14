@@ -17,7 +17,7 @@
 
 void DisplayMainMenu(int Option) {
 
-    printf("Bienvenido a Gustavin.\n");
+    printf("Bienvenido a Pedro responde.\n");
 
     for (int i = 1; i <= 5; i++) {
         
@@ -78,7 +78,6 @@ void MoveTroughMainMenu(void){
                 {
                     case 1:
                         PlayGame();
-                        getch();
                         break;
                     case 2:
                         ViewHistoryDataInFile();
