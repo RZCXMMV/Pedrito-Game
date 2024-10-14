@@ -49,6 +49,7 @@ char *GetPetition(char **AnswerToQuestion) {
     char *StringPetition = (char *) malloc(InitialSize * sizeof(char));
     if (StringPetition == NULL) {
         printf("Error al reservar memoria.\n");
+        getch();
         exit(EXIT_FAILURE);
     }
     char CharGotten;
@@ -56,6 +57,11 @@ char *GetPetition(char **AnswerToQuestion) {
     printf("Peticion: ");
     while (true) {
         CharGotten = getch(); // Read a character
+
+        if (CharGotten == 27){
+            return NULL;
+        }
+
         if (CharGotten == '\b') { // Handle backspace
             if (LengthOfString > 0) {
                 printf("\b \b");
@@ -63,24 +69,27 @@ char *GetPetition(char **AnswerToQuestion) {
             }
             continue;
         }
-        if (CharGotten == '\r' || CharGotten == 27) { // Enter or Escape key to terminate
+
+        if (CharGotten == '\r') { 
             StringPetition[LengthOfString] = '\0';
-            if (!strcmp(StringPetition, PetitionAutoLarge) || !strcmp(StringPetition, PetitionAutoShort) || CharGotten == 27) {
+            if (!strcmp(StringPetition, PetitionAutoLarge) || !strcmp(StringPetition, PetitionAutoShort)) {
                 break;
             }
             ClearScreen();
             printf("\nLa peticion dada es incorrecta.\n");
             getch();
             ClearScreen();
-            printf("Petition: ");
+            printf("Peticion: ");
             LengthOfString = 0;
             continue;
         }
+
         if (CharGotten == '.') { // Handle custom answer input
             char *Answer = (char *) malloc(InitialSize * sizeof(char));
             int LengthOfAns = 0;
             if (Answer == NULL) {
                 printf("Error al re alocar la memoria.\n");
+                getch();
                 exit(EXIT_FAILURE);
             }
             char CharInput;
@@ -96,9 +105,20 @@ char *GetPetition(char **AnswerToQuestion) {
                     Answer = (char *) realloc(Answer, InitialSize * sizeof(char));
                     if (Answer == NULL) {
                         printf("Error al re alocar la memoria.\n");
+                        getch();
                         return NULL;
                     }
                 }
+                if (LengthOfString + 1 >= InitialSize) {
+                    InitialSize *= 2; 
+                    StringPetition = (char *) realloc(StringPetition, InitialSize * sizeof(char));
+                    if (StringPetition == NULL) {
+                        printf("Error al reservar memoria.\n");
+                        getch();
+                        return NULL;
+                    }
+                }
+
                 Answer[LengthOfAns++] = CharInput;
                 if (isalnum(CharInput) || CharInput == ' ') {
                     if (LengthOfString < strlen(PetitionAutoLarge)) {
@@ -109,18 +129,24 @@ char *GetPetition(char **AnswerToQuestion) {
             }
             continue;
         }
+
         // Store the input character and print it
         if (LengthOfString + 1 >= InitialSize) {
             InitialSize *= 2;
             StringPetition = (char *) realloc(StringPetition, InitialSize * sizeof(char));
             if (StringPetition == NULL) {
-                printf("Memory reallocation failed.\n");
+                printf("Error al reservar memoria.\n");
+                getch();
                 return NULL;
             }
         }
-        StringPetition[LengthOfString++] = CharGotten;
-        putchar(CharGotten); // Display character
+
+        if (isalnum(CharGotten) || CharGotten == ' '){
+            StringPetition[LengthOfString++] = CharGotten;
+            putchar(CharGotten); // Display character
+        }        
     }
+
     StringPetition[LengthOfString] = '\0';
     return StringPetition;
 }
@@ -140,7 +166,7 @@ char *GetQuestion(){
 
     printf("\nPregunta (cierre '?'): ");
 
-    while((Ch = getch()) != '?'){
+    while(((Ch = getch()) != '?') || Index < 10){
 
         if (Ch == '\b') { // Handle backspace
             if (Index > 0) {
@@ -158,8 +184,11 @@ char *GetQuestion(){
                 return NULL;
             }
         }
-        Question[Index++] = Ch;
-        putchar(Ch); // Display character
+
+        if(isalnum(Ch) || Ch == ' '){
+            Question[Index++] = Ch;
+            putchar(Ch); // Display character
+        }   
     }
 
     putchar(Ch);
