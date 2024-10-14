@@ -82,10 +82,10 @@ int ViewHistoryDataInFile() {
 
     int row = 2; // Start row for displaying data
 
-    char *QuestionAsked;
-    char *ResponseGotten;
+    char QuestionAsked[256];
+    char ResponseGotten[256];
 
-    while (fscanf(Fp, "%[^,],%[^\n]", QuestionAsked, ResponseGotten) == 2) {
+    while (fscanf(Fp, "%255[^,],%255[^\n]", QuestionAsked, ResponseGotten) == 2) {
         if (row == Height - 6) { // If data exceeds the terminal height
             row = 2;
             gotoxy((EndX / 2) - 16, (EndY - 2));
@@ -98,7 +98,8 @@ int ViewHistoryDataInFile() {
         gotoxy((Width / 2) + 3, StartY + 1);
         printf("Historial.\n");
 
-        printf("Pregunta: %s, Respuesta: %s", QuestionAsked, ResponseGotten);
+        gotoxy((Width / 2) + 3, StartY + row);
+        printf("%20s | %20s", QuestionAsked, ResponseGotten);
         row++;
     }
 
@@ -138,8 +139,8 @@ void GetGameInstructions(void) {
 void PlayGame(){
     ClearScreen();
 
-    char *Petition;
-    char *Question;
+    char *Petition = NULL;
+    char *Question = NULL;
     char *AnswerToQuestion = NULL;
     char Key;
 
@@ -159,27 +160,34 @@ void PlayGame(){
 
     Petition = GetPetition(&AnswerToQuestion);
 
-    Question = GetQuestion();
+    if(Petition != NULL){
 
-    if (AnswerToQuestion != NULL) {
-        printf("Respuesta oculta: %s\n", AnswerToQuestion);
-        StoreHistoryDataInFile(Question, AnswerToQuestion);
-        free(AnswerToQuestion);
+        Question = GetQuestion();
+
+        if(Question != NULL){
+            if (AnswerToQuestion != NULL) {
+                printf("\nRespuesta: %s\n", AnswerToQuestion);
+                StoreHistoryDataInFile(Question, AnswerToQuestion);
+                free(AnswerToQuestion);
+            }
+
+            else{
+                int Max = 12;
+                int Min = 0; 
+                int RdNum = rand() % (Max - Min + 1) + Min;
+
+                printf("\nRespuesta: %s\n", DefaultAnswers[RdNum]);
+
+                StoreHistoryDataInFile(Question, DefaultAnswers[RdNum]);
+            }
+        }
+
+        getch();
     }
 
-    else{
-        int Max = 12;
-        int Min = 0; 
-        int RdNum = rand() % (Max - Min + 1) + Min;
-
-        printf("\nRespuesta: %s\n", DefaultAnswers[RdNum]);
-
-        StoreHistoryDataInFile(Question, DefaultAnswers[RdNum]);
-    }
-
+    // free(AnswerToQuestion);
     free(Question);
     free(Petition);
-    getch();
 }
 
 #endif
