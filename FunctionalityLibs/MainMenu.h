@@ -88,19 +88,22 @@ void MoveTroughMainMenu(void){
                     case 2:
                         ClearScreen();
                         ViewHistoryDataInFile();
-                        getch();
+                        LoadLoadingBar("Volviendo...");
                         break;
 
                     case 3:
                         ClearScreen();
                         GetGameInstructions();
                         getch();
+                        ClearScreen();
+                        LoadLoadingBar("Volviendo...");
                         break;
 
                     case 4:
                         ClearScreen();
                         ShowCredentials();
                         ClearScreen();
+                        LoadLoadingBar("Volviendo...");
                         break;
 
                     case 5:
