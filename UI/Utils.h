@@ -230,7 +230,7 @@ void ShowCredentials(void){
     int XIdPosition = XAxis + 35;
 
     gotoxy(XAxis, YAxis);
-    printf("Proyecto GYM UNI.");
+    printf("Proyecto - Pedrito Responde.");
 
     YAxis += 2;
     gotoxy(XAxis, YAxis);
