@@ -58,6 +58,7 @@ int ViewHistoryDataInFile() {
         gotoxy((Size.columns / 2) - 20, (Size.rows / 2));
         printf("\033[0;31mError al tratar de abrir archivo\033[0m\n");
         getch();
+        ClearScreen();
         return EXIT_FAILURE;
     }
 
@@ -67,6 +68,7 @@ int ViewHistoryDataInFile() {
         gotoxy((EndX / 2) - 14, EndY / 2);
         printf("\033[0;31mNo hay historial disponible.\033[0m\n");
         getch();
+        ClearScreen();
         fclose(Fp);
         return EXIT_FAILURE;
     }
@@ -99,9 +101,26 @@ int ViewHistoryDataInFile() {
             row = 3;  // Reset row position
         }
 
-        // Move to the next line for each question-answer pair
+        // Limit text to fit in the column width and add ellipsis if needed
+        char TruncatedQuestion[QuestionWidth + 1];
+        char TruncatedResponse[AnswerWidth + 1];
+
+        strncpy(TruncatedQuestion, QuestionAsked, QuestionWidth);
+        strncpy(TruncatedResponse, ResponseGotten, AnswerWidth);
+
+        TruncatedQuestion[QuestionWidth] = '\0';
+        TruncatedResponse[AnswerWidth] = '\0';
+
+        if (strlen(QuestionAsked) > QuestionWidth) {
+            strcpy(&TruncatedQuestion[QuestionWidth - 3], "...");
+        }
+        if (strlen(ResponseGotten) > AnswerWidth) {
+            strcpy(&TruncatedResponse[AnswerWidth - 3], "...");
+        }
+
+        // Print the truncated question and response
         gotoxy(StartX + 2, StartY + row);
-        printf("%-*s | %-*s", QuestionWidth, QuestionAsked, AnswerWidth, ResponseGotten);
+        printf("%-*s | %-*s", QuestionWidth, TruncatedQuestion, AnswerWidth, TruncatedResponse);
 
         row++;  // Move to the next row
     }
@@ -109,8 +128,9 @@ int ViewHistoryDataInFile() {
     if (ferror(Fp)) {
         ClearScreen();
         gotoxy((Size.columns / 2) - 14, (Size.rows / 2));
-        printf("\033[0;31mI/O error leyendo el archivo\033[0m\n");
+        printf("\033[0;31mI/O Error leyendo el archivo\033[0m\n");
         getch();
+        ClearScreen();
         fclose(Fp);
         return EXIT_FAILURE;
     }
