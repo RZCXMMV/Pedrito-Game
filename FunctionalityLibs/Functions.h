@@ -150,6 +150,8 @@ void GetGameInstructions(void) {
     if (Fp == NULL) {
         gotoxy(35,16);
         perror("No se pudo abrir el archivo.");
+        getch();
+        ClearScreen();
         return;
     }
 
