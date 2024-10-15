@@ -5,7 +5,6 @@
 #include "Prototypes.h"
 #include "Helpers.h"
 #include "Structs.h"
-#include "../UI/UIPrototypes.h"
 
 
 #ifndef FUNCTIONS_H
@@ -122,6 +121,7 @@ void GetGameInstructions(void) {
     char *FileName = "Instructions.txt";
     FILE *Fp = fopen(FileName, "r");
     if (Fp == NULL) {
+        gotoxy(35,16);
         perror("No se pudo abrir el archivo.");
         return;
     }
@@ -164,7 +164,9 @@ void PlayGame(){
 
         if(Question != NULL){
             if (AnswerToQuestion != NULL) {
-                printf("\nRespuesta: %s\n", AnswerToQuestion);
+
+                gotoxy(StartX + 2, StartY + 4);
+                printf("Respuesta: %s", AnswerToQuestion);
                 StoreHistoryDataInFile(Question, AnswerToQuestion);
                 free(AnswerToQuestion);
             }
@@ -173,8 +175,12 @@ void PlayGame(){
                 int Max = 12;
                 int Min = 0; 
                 int RdNum = rand() % (Max - Min + 1) + Min;
-
-                printf("\nRespuesta: %s\n", DefaultAnswers[RdNum]);
+                
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+                gotoxy(StartX + 2, StartY + 4);
+                printf("Respuesta: %s", DefaultAnswers[RdNum]);
+                getch();
+                ClearScreen();
 
                 StoreHistoryDataInFile(Question, DefaultAnswers[RdNum]);
             }
@@ -186,6 +192,7 @@ void PlayGame(){
     // free(AnswerToQuestion);
     free(Question);
     free(Petition);
+    ClearScreen();
 }
 
 #endif

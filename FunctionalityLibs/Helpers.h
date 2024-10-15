@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <windows.h>
+#include "../UI/UIPrototypes.h"
 
 
 #ifndef HELPERS_H
@@ -45,18 +46,26 @@ bool IsFileEmpty(const char *FileName)
 }
 
 char *GetPetition(char **AnswerToQuestion) {
+    TerminalSize Dimensions = CalculateTerminalSize();
+
+    // Determine the width and height based on the terminal size
+    int Width = Dimensions.columns - StartX * 2 - 2; // Adjusting to fit within the terminal
+    int Height = Dimensions.rows - StartY * 2 - 2;   // Adjusting to fit within the terminal
+
     char *PetitionAutoLarge = "Pedro por favor responde esta pregunta";
     char *PetitionAutoShort = "Pedro por favor responde";
     int InitialSize = 10;
     int LengthOfString = 0;
     char *StringPetition = (char *) malloc(InitialSize * sizeof(char));
     if (StringPetition == NULL) {
-        printf("Error al reservar memoria.\n");
+        gotoxy((Width / 2) - 5, Height / 2);
+        printf("Error al reservar memoria.");
         getch();
         exit(EXIT_FAILURE);
     }
     char CharGotten;
-
+    DrawRectangleNoSymbolInside(StartX, StartY);
+    gotoxy(StartX + 2, StartY + 1);
     printf("Peticion: ");
     while (true) {
         CharGotten = getch(); // Read a character
@@ -79,9 +88,13 @@ char *GetPetition(char **AnswerToQuestion) {
                 break;
             }
             ClearScreen();
-            printf("\nLa peticion dada es incorrecta.\n");
+            DrawRectangleNoSymbolInside(StartX, StartY);
+            gotoxy((Width / 2) - 6, Height / 2);
+            printf("La peticion dada es incorrecta.");
             getch();
             ClearScreen();
+            DrawRectangleNoSymbolInside(StartX, StartY);
+            gotoxy(StartX + 2, StartY + 1);
             printf("Peticion: ");
             LengthOfString = 0;
             continue;
@@ -91,7 +104,8 @@ char *GetPetition(char **AnswerToQuestion) {
             char *Answer = (char *) malloc(InitialSize * sizeof(char));
             int LengthOfAns = 0;
             if (Answer == NULL) {
-                printf("Error al re alocar la memoria.\n");
+                gotoxy((Width / 2) - 6, Height / 2);
+                printf("Error al re alocar la memoria.");
                 getch();
                 exit(EXIT_FAILURE);
             }
@@ -107,7 +121,8 @@ char *GetPetition(char **AnswerToQuestion) {
                     InitialSize *= 2;
                     Answer = (char *) realloc(Answer, InitialSize * sizeof(char));
                     if (Answer == NULL) {
-                        printf("Error al re alocar la memoria.\n");
+                        gotoxy((Width / 2) - 6, Height / 2);
+                        printf("Error al re alocar la memoria.");
                         getch();
                         return NULL;
                     }
@@ -116,7 +131,8 @@ char *GetPetition(char **AnswerToQuestion) {
                     InitialSize *= 2; 
                     StringPetition = (char *) realloc(StringPetition, InitialSize * sizeof(char));
                     if (StringPetition == NULL) {
-                        printf("Error al reservar memoria.\n");
+                        gotoxy((Width / 2) - 5, Height / 2);
+                        printf("Error al reservar memoria.");
                         getch();
                         return NULL;
                     }
@@ -138,6 +154,7 @@ char *GetPetition(char **AnswerToQuestion) {
             InitialSize *= 2;
             StringPetition = (char *) realloc(StringPetition, InitialSize * sizeof(char));
             if (StringPetition == NULL) {
+                gotoxy((Width / 2) - 5, Height / 2);
                 printf("Error al reservar memoria.\n");
                 getch();
                 return NULL;
@@ -155,6 +172,11 @@ char *GetPetition(char **AnswerToQuestion) {
 }
 
 char *GetQuestion(){
+    TerminalSize Dimensions = CalculateTerminalSize();
+
+    // Determine the width and height based on the terminal size
+    int Width = Dimensions.columns - StartX * 2 - 2; // Adjusting to fit within the terminal
+    int Height = Dimensions.rows - StartY * 2 - 2;   // Adjusting to fit within the terminal
 
     char Ch;
     int Size = 10;
@@ -162,12 +184,15 @@ char *GetQuestion(){
     char *Question = (char *) malloc(Size * sizeof(char));
 
     if(Question == NULL){
-        printf("Error al reservar memoria.\n");
+        gotoxy((Width / 2) - 8, Height / 2);
+        printf("Error al reservar memoria.");
         getch();
         exit(EXIT_FAILURE);
     }
 
-    printf("\nPregunta (cierre '?'): ");
+    DrawRectangleNoSymbolInside(StartX, StartY);
+    gotoxy(StartX + 2, StartY + 2);
+    printf("Pregunta (cierre '?'): ");
 
     while(((Ch = getch()) != '?') || Index < 10){
 
@@ -183,7 +208,8 @@ char *GetQuestion(){
             Size *= 2;
             Question = (char *) realloc(Question, Size * sizeof(char));
             if (Question == NULL) {
-                printf("Error al reservar mas memora.\n");
+                gotoxy((Width / 2) - 8, Height / 2);
+                printf("Error al reservar mas memoria.");
                 return NULL;
             }
         }

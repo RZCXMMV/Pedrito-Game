@@ -5,7 +5,6 @@
 
 #include "Prototypes.h"
 #include "Helpers.h"
-#include "../UI/UIPrototypes.h"
 
 #define KEY_UP 72
 #define KEY_DOWN 80
@@ -16,11 +15,11 @@
 #define MAIN_MENU_H
 
 void DisplayMainMenu(int Option) {
-
+    ClearScreen();
     DrawRectangleNoSymbolInside(StartX, StartY);
 
     gotoxy(StartX + 2, StartY + 1);
-
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
     printf("Bienvenido a Pedro responde.\n");
 
     for (int i = 1; i <= 5; i++) {
@@ -83,19 +82,23 @@ void MoveTroughMainMenu(void){
                 switch (Option)
                 {
                     case 1:
+                        ClearScreen();
                         PlayGame();
                         break;
                     case 2:
+                        ClearScreen();
                         ViewHistoryDataInFile();
                         getch();
                         break;
 
                     case 3:
+                        ClearScreen();
                         GetGameInstructions();
                         getch();
                         break;
 
                     case 4:
+                        ClearScreen();
                         ShowCredentials();
                         ClearScreen();
                         break;
