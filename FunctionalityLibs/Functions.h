@@ -37,84 +37,91 @@ int StoreHistoryDataInFile(char *Question, char *Response){
 }
 
 int ViewHistoryDataInFile() {
-
     TerminalSize Size = CalculateTerminalSize();
     GameHistoryData Data;
 
-    // Determine the width and height based on the terminal size
-    int Width = Size.columns - StartX * 2 - 2; // Adjusting to fit within the terminal
-    int Height = Size.rows - StartY * 2 - 2;   // Adjusting to fit within the terminal
+    int Width = Size.columns - StartX * 2 - 2;
+    int Height = Size.rows - StartY * 2 - 2;
 
     const int EndX = Width + StartX;
     const int EndY = Height + StartY;
+
+    const int QuestionWidth = Width / 2 - 3;
+    const int AnswerWidth = Width / 2 - 3;
 
     const char *FileName = "PedritoData.txt";
 
     FILE *Fp = fopen(FileName, "r");
 
-    if(!Fp){
+    if (!Fp) {
         ClearScreen();
         gotoxy((Size.columns / 2) - 20, (Size.rows / 2));
-        perror("Error al tratar de abrir archivo");
+        printf("\033[0;31mError al tratar de abrir archivo\033[0m\n");
         getch();
-        return EXIT_FAILURE; // Return failure if the file could not be opened
+        return EXIT_FAILURE;
     }
 
-    // Check if the file is empty
-    if(IsFileEmpty(FileName)){
+    if (IsFileEmpty(FileName)) {
         ClearScreen();
         DrawRectangleNoSymbolInside(StartX, StartY);
         gotoxy((EndX / 2) - 14, EndY / 2);
-        printf("No hay historial disponible.");
+        printf("\033[0;31mNo hay historial disponible.\033[0m\n");
         getch();
         fclose(Fp);
-        return EXIT_FAILURE; 
+        return EXIT_FAILURE;
     }
 
     ClearScreen();
-    rewind(Fp); 
-
-
+    rewind(Fp);
     DrawRectangleNoSymbolInside(StartX, StartY);
 
-    int row = 2; // Start row for displaying data
+    // Print headers
+    gotoxy(StartX + 2, StartY + 1);
+    printf("\033[0;31m%-*s | %-*s\033[0m", QuestionWidth, "Pregunta", AnswerWidth, "Respuesta");
 
     char QuestionAsked[256];
     char ResponseGotten[256];
 
-    while (fscanf(Fp, "%255[^,],%255[^\n]", QuestionAsked, ResponseGotten) == 2) {
-        if (row == Height - 6) { // If data exceeds the terminal height
-            row = 2;
+    int row = 3;  // Start displaying from row 3
+
+    while (fscanf(Fp, " %255[^,], %255[^\n]", QuestionAsked, ResponseGotten) == 2) {
+        if (row >= Height - 3) {  // If row limit reached, paginate
             gotoxy((EndX / 2) - 16, (EndY - 2));
-            printf("Continuar listado, presione cualquier tecla...");
+            printf("\033[0;31mContinuar listado, presione cualquier tecla...\033[0m");
             getch();
             ClearScreen();
             DrawRectangleNoSymbolInside(StartX, StartY);
+
+            // Redraw headers
+            gotoxy(StartX + 2, StartY + 1);
+            printf("\033[0;31m%-*s | %-*s\033[0m", QuestionWidth, "Pregunta", AnswerWidth, "Respuesta");
+
+            row = 3;  // Reset row position
         }
 
-        gotoxy((Width / 2) + 3, StartY + 1);
-        printf("Historial.\n");
+        // Move to the next line for each question-answer pair
+        gotoxy(StartX + 2, StartY + row);
+        printf("%-*s | %-*s", QuestionWidth, QuestionAsked, AnswerWidth, ResponseGotten);
 
-        gotoxy((Width / 2) + 3, StartY + row);
-        printf("%20s | %20s", QuestionAsked, ResponseGotten);
-        row++;
+        row++;  // Move to the next row
     }
 
     if (ferror(Fp)) {
         ClearScreen();
         gotoxy((Size.columns / 2) - 14, (Size.rows / 2));
-        perror("I/O error leyendo el archivo");
+        printf("\033[0;31mI/O error leyendo el archivo\033[0m\n");
         getch();
-        fclose(Fp); 
-        return EXIT_FAILURE; 
+        fclose(Fp);
+        return EXIT_FAILURE;
     }
-    
+
     fclose(Fp);
-    getch(); // Wait for the user to press a key before clearing the screen
+    getch();
     ClearScreen();
 
-    return EXIT_SUCCESS; 
+    return EXIT_SUCCESS;
 }
+
 
 void GetGameInstructions(void) {
     ClearScreen();
