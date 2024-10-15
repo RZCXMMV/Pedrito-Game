@@ -9,6 +9,9 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
+#define StartX 10
+#define StartY 5
+
 void ClearInputBuffer(void) {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);

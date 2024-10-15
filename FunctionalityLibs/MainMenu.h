@@ -17,16 +17,21 @@
 
 void DisplayMainMenu(int Option) {
 
+    DrawRectangleNoSymbolInside(StartX, StartY);
+
+    gotoxy(StartX + 2, StartY + 1);
+
     printf("Bienvenido a Pedro responde.\n");
 
     for (int i = 1; i <= 5; i++) {
+        gotoxy(StartX + 2, StartY + 1 + i);
         
         if (i == Option) {
-            printf("-> ");
-        } 
-        
-        else {
-            printf("   ");
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+            printf("-> "); // Flecha para la opción seleccionada
+        } else {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            printf("   "); // Espacio para mantener alineación incluso sin la flecha de seleccion
         }
 
         printf("[%d]. %s", i, 
@@ -36,7 +41,8 @@ void DisplayMainMenu(int Option) {
                (i == 4) ? "Creditos.\n":
                "Salir.\n");
     }
-
+    gotoxy(StartX + 2, StartY + 7);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
     printf("Usar las flechas up/down para desplazarse, Enter para seleccionar.");
 }
 
@@ -44,10 +50,10 @@ void DisplayMainMenu(int Option) {
 void MoveTroughMainMenu(void){
 
     int Option = 1;
-
+    
+    ClearScreen();
     while (true)
     {
-        ClearScreen();
         DisplayMainMenu(Option);
 
         int Key = _getch();

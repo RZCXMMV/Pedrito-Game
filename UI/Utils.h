@@ -63,7 +63,7 @@ void LoadLoadingBar(char *Message)
     {
         int percent = (i * 100) / BarLen; // Calculate percentage
         gotoxy(TerminalMidPointXAxis, TerminalMidPointYAxis); // Move cursor more or less to the center
-        printf("\033[34m");    //set color to blue
+        printf("\033[0;31m");    //set color to blue
         printf("[");                                          // Start of the bar
 
         for (int j = 0; j < i; j++)
@@ -123,42 +123,42 @@ void DrawRectangleNoSymbolInside(int startX, int startY)
     for (int xInit = startX; xInit <= endX; xInit++)
     {
         gotoxy(xInit, startY);
-        printf("%c", 196); // Horizontal line character
+        printf("%c", 205); // Horizontal line character
     }
 
     // Draw bottom side of rectangle
     for (int xInit = startX; xInit <= endX; xInit++)
     {
         gotoxy(xInit, endY);
-        printf("%c", 196); // Horizontal line character
+        printf("%c", 205); // Horizontal line character
     }
 
     // Draw left side of rectangle
     for (int yInit = startY; yInit <= endY; yInit++)
     {
         gotoxy(startX, yInit);
-        printf("%c", 179); // Vertical line character
+        printf("%c", 186); // Vertical line character
     }
 
     // Draw right side of rectangle
     for (int yInit = startY; yInit <= endY; yInit++)
     {
         gotoxy(endX, yInit);
-        printf("%c", 179); // Vertical line character
+        printf("%c", 186); // Vertical line character
     }
 
     // Draw corners
     gotoxy(startX, startY);
-    printf("%c", 218); // Top-left corner
+    printf("%c", 201); // Top-left corner
 
     gotoxy(endX, startY);
-    printf("%c", 191); // Top-right corner
+    printf("%c", 187); // Top-right corner
 
     gotoxy(startX, endY);
-    printf("%c", 192); // Bottom-left corner
+    printf("%c", 200); // Bottom-left corner
 
     gotoxy(endX, endY);
-    printf("%c", 217); // Bottom-right corner
+    printf("%c", 188); // Bottom-right corner
 }
 
 void LoadLogoUni(void){
@@ -223,7 +223,7 @@ void ShowCredentials(void){
     struct tm tm = *localtime(&t);
     TerminalSize size = CalculateTerminalSize();
 
-    DrawRectangleNoSymbolInside(10, 2);
+    DrawRectangleNoSymbolInside(10, 5);
 
     int XAxis = (size.columns / 2) - 21;
     int YAxis = (size.rows / 2) - 5;

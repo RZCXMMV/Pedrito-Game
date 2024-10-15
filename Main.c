@@ -38,6 +38,10 @@
 */
 int main(void){
 
+    ClearScreen();
+    LoadLogoUni();
+    ClearInputBuffer();
+
     //Principal Menu
     MoveTroughMainMenu();
 

@@ -7,8 +7,6 @@
 #include "Structs.h"
 #include "../UI/UIPrototypes.h"
 
-#define StartX 10
-#define StartY 1
 
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
