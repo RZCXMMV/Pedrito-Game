@@ -15,7 +15,7 @@
 #define MAIN_MENU_H
 
 void DisplayMainMenu(int Option) {
-    ClearScreen();
+    // ClearScreen();
     DrawRectangleNoSymbolInside(StartX, StartY);
 
     gotoxy(StartX + 2, StartY + 1);
@@ -82,13 +82,13 @@ void MoveTroughMainMenu(void){
                 switch (Option)
                 {
                     case 1:
-                        ClearScreen();
                         PlayGame();
+                        ClearScreen();
                         break;
                     case 2:
-                        ClearScreen();
                         ViewHistoryDataInFile();
                         LoadLoadingBar("Volviendo...");
+                        ClearScreen();
                         break;
 
                     case 3:
@@ -97,6 +97,7 @@ void MoveTroughMainMenu(void){
                         getch();
                         ClearScreen();
                         LoadLoadingBar("Volviendo...");
+                        ClearScreen();
                         break;
 
                     case 4:
@@ -104,6 +105,7 @@ void MoveTroughMainMenu(void){
                         ShowCredentials();
                         ClearScreen();
                         LoadLoadingBar("Volviendo...");
+                        ClearScreen();
                         break;
 
                     case 5:
