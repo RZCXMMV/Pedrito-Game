@@ -181,13 +181,13 @@ void LoadLogoUni(void){
         Sleep(1500);
 
         // Set console text color to blue
-        printf("\033[0;34m");
+        printf("\033[0;31m");
 
         // Loop through each rectangle and draw it
         int numRectangles = sizeof(rectangles) / sizeof(rectangles[0]);
         for (int i = 0; i < numRectangles; i++)
         {
-            DrawRectangle(rectangles[i][0], rectangles[i][1], rectangles[i][2], rectangles[i][3], 0.100000, "\033[0;34m");
+            DrawRectangle(rectangles[i][0], rectangles[i][1], rectangles[i][2], rectangles[i][3], 0.100000, "\033[0;31m");
         }
 
         // Delay before starting the glow effect
@@ -203,7 +203,7 @@ void LoadLogoUni(void){
 
         for (int i = 0; i < numRectangles; i++)
         {
-            DrawRectangle(rectangles[i][0], rectangles[i][1], rectangles[i][2], rectangles[i][3], 0.100000, "\033[0;34m");
+            DrawRectangle(rectangles[i][0], rectangles[i][1], rectangles[i][2], rectangles[i][3], 0.100000, "\033[0;31m");
         }
 
         // Reset console color
