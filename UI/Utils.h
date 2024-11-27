@@ -267,7 +267,7 @@ void ShowCredentials(void){
     
     YAxis += 2;
     gotoxy(XAxis, YAxis);
-    printf("Docente: Ing.Nelson Barrios.");
+    printf("Docente: Ing .Nelson Barrios.");
 
     YAxis += 2;
     gotoxy(XIdPosition, YAxis);
