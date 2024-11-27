@@ -259,6 +259,12 @@ void ShowCredentials(void){
     gotoxy(XIdPosition, YAxis);
     printf("2024-1896U.");
     
+    YAxis++;
+    gotoxy(XAxis, YAxis);
+    printf("Diana Esther Tinoco Davila");
+    gotoxy(XIdPosition, YAxis);
+    printf("2024-1863U.");
+    
     YAxis += 2;
     gotoxy(XAxis, YAxis);
     printf("Docente: Ing.Nelson Barrios.");
